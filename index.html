@@ -1,262 +1,520 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>KD Web — Fast, Modern, Affordable Websites</title>
-  <meta name="description" content="KD Web builds clean, mobile‑friendly one‑page websites for Nigerian SMEs and e‑businesses. 48‑hour delivery from ₦12,000.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>The Root Access Network — Home</title>
+
+  <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = { theme: { extend: { colors: { brand: '#000000' } } } }
-  </script>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
   <style>
-    *{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
-    .card{border-radius:1rem; box-shadow:0 10px 30px rgba(0,0,0,.35)}
-    .hero-slide{position:absolute; inset:0; background-size:cover; background-position:center; opacity:0; transition:opacity .8s ease}
-    .hero-slide.active{opacity:1}
-    .marquee{display:flex; gap:1.25rem; animation:scroll 22s linear infinite}
-    @keyframes scroll{from{transform:translateX(0)} to{transform:translateX(-50%)} }
-     /* Promo theme (bright celebratory, more eye-catching) */
-    .promo-bg{position:relative; background:linear-gradient(135deg,#22c55e,#3b82f6,#a855f7); color:#fff}
-    .promo-bg:before{content:""; position:absolute; inset:0; background-image:radial-gradient(rgba(255,255,255,.3) 1px, transparent 1px); background-size:22px 22px; opacity:.3}
-    .ribbon{display:inline-flex; align-items:center; gap:.5rem; background:rgba(255,255,255,.2); border:1px solid rgba(255,255,255,.4); padding:.4rem .75rem; border-radius:999px; font-weight:700}
-    .promo-card{border-radius:1rem; background:#fff; color:#111827; box-shadow:0 20px 40px rgba(0,0,0,.3); transition:transform .2s ease, box-shadow .2s ease}
-    .promo-card:hover{transform:translateY(-6px) scale(1.02); box-shadow:0 30px 60px rgba(0,0,0,.4)}
-   </style>
+    :root{
+      --green: #1DB954;      /* primary accent */
+      --dark: #0F2D1E;       /* deep green/dark header */
+      --muted: #ecedf0;
+      --white: #ffffff
+    }
+    body { font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; }
+    /* play overlay circle */
+    .play-overlay {
+      background: rgba(0,0,0,0.45);
+      backdrop-filter: blur(2px);
+      width:72px; height:72px; border-radius:9999px;
+      display:flex; align-items:center; justify-content:center;
+      transition: transform .18s ease;
+    }
+    .play-overlay svg { width:28px; height:28px; color:white; }
+    .play-overlay:hover{ transform: scale(1.06); }
+    /* horizontal event scroll smoothing */
+    .scroll-snap { scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; }
+    .card-snap { scroll-snap-align: start; }
+    /* small shadow */
+    .soft-glow { box-shadow: 0 10px 30px rgba(16,185,129,0.08); }
+  </style>
 </head>
-<body class="bg-slate-950 text-slate-100">
-  <!-- ====== NAV ====== -->
-  <header class="sticky top-0 z-50 bg-black/70 backdrop-blur border-b border-white/10">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-      <a href="#" class="text-2xl font-extrabold tracking-tight">KD <span class="text-white">Web</span></a>
-      <nav class="hidden md:flex items-center gap-6 text-sm font-semibold">
-        <a href="#about" class="hover:text-white/90 text-white/70">About</a>
-        <a href="#services" class="hover:text-white/90 text-white/70">Services</a>
-        <a href="#promo" class="hover:text-white/90 text-white/70">Promo</a>
-        <a href="#work" class="hover:text-white/90 text-white/70">Work</a>
-        <a href="#contact" class="hover:text-white/90 text-white/70">Contact</a>
-        <a href="https://wa.me/2348072352709?text=Hi%2C%20I%20want%20a%20one-page%20website" class="px-4 py-2 rounded-xl bg-white text-black">Chat on WhatsApp</a>
-      </nav>
-      <button id="menuBtn" class="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-xl border border-white/20 text-white">☰</button>
-    </div>
-    <div id="mobileMenu" class="md:hidden hidden border-t border-white/10 bg-black/85">
-      <div class="max-w-7xl mx-auto px-4 py-3 flex flex-col gap-3 text-sm font-semibold">
-        <a class="text-white/80" href="#about">About</a>
-        <a class="text-white/80" href="#services">Services</a>
-        <a class="text-white/80" href="#promo">Promo</a>
-        <a class="text-white/80" href="#work">Work</a>
-        <a class="text-white/80" href="#contact">Contact</a>
-        <a href="https://wa.me/2348072352709?text=Hi%2C%20I%20want%20a%20one-page%20website" class="px-4 py-2 rounded-xl bg-white text-black w-max">Chat on WhatsApp</a>
+<body class="bg-white text-gray-900">
+
+  <!-- ===== STICKY HEADER ===== -->
+  <header class="sticky top-0 z-40 bg-[color:var(--dark)] border-b border-[color:var(--green)]/20 text-white">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="flex items-center justify-between h-16">
+        <!-- Left: Logo -->
+        <a href="#" class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-md bg-black flex items-center justify-center">
+            <img src="TRAN-Logo.png" alt="Logo" class="w-6 h-6 object-contain">
+          </div>
+          <div>
+            <div class="text-lg font-extrabold">TRAN</div>
+            <div class="text-xs text-gray-300 -mt-1">The Root Access Network</div>
+          </div>
+        </a>
+
+        <!-- Nav (desktop) -->
+        <nav class="hidden md:flex items-center gap-6 font-medium">
+          <a href="#about" class="hover:text-[color:var(--green)]">About Us</a>
+          <a href="#programs" class="hover:text-[color:var(--green)]">Programs</a>
+          <a href="#education" class="hover:text-[color:var(--green)]">Education</a>
+          <a href="#events" class="hover:text-[color:var(--green)]">Events</a>
+          <a href="#involved" class="hover:text-[color:var(--green)]">Get Involved</a>
+          <a href="#contact" class="hover:text-[color:var(--green)]">Contact</a>
+        </nav>
+
+        <!-- CTA -->
+        <div class="flex items-center gap-3">
+          <button class="hidden md:inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[color:var(--green)] text-[color:var(--green)] hover:bg-[color:var(--green)] hover:text-white transition">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M10 8l6 4-6 4V8z"/></svg>
+            Watch
+          </button>
+          <a href="#programs" class="hidden md:inline-flex bg-[color:var(--green)] text-black px-4 py-2 rounded-full font-semibold hover:bg-[#159b44] transition">Join</a>
+
+          <!-- Mobile menu -->
+          <button id="mobileBtn" class="md:hidden p-2 border border-gray-500 rounded-md">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M4 8h16M4 16h16"/></svg>
+          </button>
+        </div>
       </div>
     </div>
   </header>
+  <!-- ===== HERO (full-width video/image) ===== -->
+  <main>
+    <section class="relative h-[82vh] md:h-[86vh]">
+      <!-- background video (placeholder); replace src with your clip -->
+      <video class="absolute inset-0 w-full h-full object-cover" autoplay muted loop playsinline poster="https://via.placeholder.com/1600x900.png?text=TRAN+Hero+Poster">
+        <source src="1019.mp4" type="video/mp4">
+        <!-- fallback image will show via poster attribute -->
+      </video>
 
-  <!-- ====== HERO (full background slideshow with text overlay) ====== -->
-  <section class="relative h-[90vh] flex items-center justify-center text-center text-white">
-    <!-- Slides -->
-    <div class="absolute inset-0">
-      <div class="hero-slide active" style="background-image:url('https://images.unsplash.com/photo-1522199755839-a2bacb67c546?q=80&w=1600&auto=format&fit=crop')"></div>
-      <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1556157382-97eda2d62296?q=80&w=1600&auto=format&fit=crop')"></div>
-      <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1600&auto=format&fit=crop')"></div>
-      <div class="absolute inset-0 bg-black/60"></div>
-    </div>
-    <!-- Text content -->
-    <div class="relative z-10 px-6 max-w-3xl">
-      <h1 class="text-4xl md:text-6xl font-extrabold leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">KD Web — <span class="text-white">Your Business Online in 48 Hours</span></h1>
-      <p class="mt-4 text-lg text-white/90">Mobile‑friendly single‑page websites for Nigerian SMEs and e‑businesses. Clean design, fast delivery, and a WhatsApp‑first contact flow.</p>
-      <div class="mt-6 flex flex-wrap gap-3 justify-center">
-        <a href="https://wa.me/2348072352709?text=Hi%2C%20I%20want%20a%20KD%20Web%20site" class="px-5 py-3 rounded-xl bg-white text-black font-semibold">Get Yours for ₦12,000</a>
-        <a href="#work" class="px-5 py-3 rounded-xl border border-white/70 text-white font-semibold">See Work</a>
-      </div>
-    </div>
-  </section>
+      <!-- dark overlay for readability -->
+      <div class="absolute inset-0 bg-black/55"></div>
 
-  <!-- ====== ABOUT (text + image) ====== -->
-  <section id="about" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <div class="grid md:grid-cols-2 gap-8 items-center">
-      <div>
-        <h2 class="text-2xl font-extrabold">About Us</h2>
-        <p class="mt-3 text-slate-300">We build simple, beautiful one‑page websites that help you look professional and get more enquiries. Perfect for Instagram/WhatsApp sellers, freelancers, and local businesses.</p>
-        <ul class="mt-4 space-y-2 text-slate-300/90 list-disc list-inside">
-          <li>48‑hour delivery once content is received</li>
-          <li>WhatsApp, call, and email buttons included</li>
-          <li>Free stock images if you don’t have photos</li>
-        </ul>
-      </div>
-      <div class="card overflow-hidden border border-white/10">
-        <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=1600&auto=format&fit=crop" alt="Team at work" class="w-full h-72 object-cover">
-      </div>
-    </div>
-  </section>
+      <!-- hero content -->
+      <div class="relative z-10 max-w-7xl mx-auto px-6 h-full flex items-center">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+          <!-- left text -->
+          <div class="text-white">
+            <span class="inline-flex items-center text-[color:var(--green)] font-semibold mb-4">
+              <svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7v7c0 5 7 8 10 8s10-3 10-8V7l-10-5z"/></svg>
+              Community · Mentorship · Education
+            </span>
 
-  <!-- ====== SERVICES (three cards) ====== -->
-  <section id="services" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <h2 class="text-2xl font-extrabold">Services</h2>
-    <div class="mt-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      <div class="card p-6 border border-white/10 bg-white/5">
-        <div class="text-white font-semibold">Portfolio & Professional</div>
-        <p class="mt-2 text-slate-300">One‑page site for freelancers, consultants, and creatives with project gallery and contact CTA.</p>
-      </div>
-      <div class="card p-6 border border-white/10 bg-white/5">
-        <div class="text-white font-semibold">Business / E‑commerce</div>
-        <p class="mt-2 text-slate-300">Product highlights with prices and WhatsApp order buttons. Simple, fast, effective.</p>
-      </div>
-      <div class="card p-6 border border-white/10 bg-white/5">
-        <div class="text-white font-semibold">Services (Hotels, Churches, NGOs)</div>
-        <p class="mt-2 text-slate-300">Sectioned layout for programs, events, and enquiries with map/contact options.</p>
-      </div>
-    </div>
-  </section>
+            <h1 class="text-3xl md:text-5xl font-extrabold leading-tight mb-4">Making Cybersecurity Knowledge Available to Everyone</h1>
 
-  <!-- ====== PROMO (Template selection) ====== -->
-  <section id="promo" class="promo-bg">
-    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-      <div class="text-center">
-        <span class="ribbon text-sm uppercase tracking-widest animate-pulse">🎉 Limited Time Promo</span>
-        <h2 class="mt-3 text-3xl md:text-4xl font-extrabold">Choose Your Template • Pay <span class="underline decoration-white/80">₦0</span> • Live in 48 Hours</h2>
-        <p class="mt-2 text-white/90 max-w-2xl mx-auto">Celebrate our launch with a vibrant deal! Pick a template, and we’ll customise it with your brand in just 2 days.</p>
+            <p class="text-gray-200 max-w-xl mb-6">Supporting students and early-career professionals to break into IT & Cybersecurity through mentorship, school tours, and street outreach.</p>
+
+            <div class="flex gap-4">
+              <a href="#programs" class="inline-flex items-center gap-2 bg-[color:var(--green)] text-black px-5 py-3 rounded-full font-semibold hover:bg-[#159b44] transition">
+                Join the Network
+              </a>
+
+              <button id="watchBtn2" class="inline-flex items-center gap-2 border border-white text-white px-4 py-3 rounded-full hover:bg-white hover:text-black transition">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M10 8l6 4-6 4V8z"/></svg>
+                Watch Videos
+              </button>
+            </div>
+          </div>
+
+          <!-- right media / callout -->
+          <div class="relative">
+            <!-- small stat badges -->
+            <div class="absolute -bottom-6 right-0 md:right-6">
+              <div class="bg-white shadow-lg rounded-xl py-4 px-6 text-[color:var(--dark)] flex items-center gap-4">
+                <div class="text-[color:var(--green)] text-2xl font-bold">500+</div>
+                <div class="text-sm">Students Reached</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
       </div>
-      <div class="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        <!-- Template 1 -->
-        <div class="promo-card overflow-hidden">
-          <img src="4d7d9952f74c0a2e5618f5b19e990f09.jpg" class="w-full h-48 object-cover" alt="Portfolio template">
-          <div class="p-5">
-            <h3 class="font-bold text-lg">Portfolio & Professional</h3>
-            <p class="text-slate-600 text-sm mt-2">Ideal for freelancers, consultants & creatives.</p>
-            <div class="mt-4 flex items-center justify-between">
-              <span class="text-slate-900 font-extrabold">₦12,000</span>
-              <a href="https://wa.me/2348072352709?text=I%20want%20the%20Portfolio%20template" class="px-4 py-2 rounded-xl bg-slate-900 text-white text-sm font-semibold">Choose</a>
+    </section>
+
+    <!-- ===== IMPACT STATS ===== -->
+    <section id="impact" class="max-w-7xl mx-auto px-6 py-14">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <div class="bg-white rounded-2xl p-6 flex items-start gap-4 soft-glow border">
+          <div class="w-12 h-12 rounded-lg bg-[color:var(--green)]/10 flex items-center justify-center">
+            <svg class="w-6 h-6 text-[color:var(--green)]" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 100 20 10 10 0 000-20z"/></svg>
+          </div>
+          <div>
+            <div class="text-2xl font-bold">500+</div>
+            <div class="text-sm text-gray-600">Students Reached</div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 flex items-start gap-4 soft-glow border">
+          <div class="w-12 h-12 rounded-lg bg-[color:var(--green)]/10 flex items-center justify-center">
+            <svg class="w-6 h-6 text-[color:var(--green)]" viewBox="0 0 24 24" fill="currentColor"><path d="M3 13h2v-2H3v2zm4 0h2v-2H7v2z"/></svg>
+          </div>
+          <div>
+            <div class="text-2xl font-bold">1,200+</div>
+            <div class="text-sm text-gray-600">Mentorship Hours</div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 flex items-start gap-4 soft-glow border">
+          <div class="w-12 h-12 rounded-lg bg-[color:var(--green)]/10 flex items-center justify-center">
+            <svg class="w-6 h-6 text-[color:var(--green)]" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v18"/></svg>
+          </div>
+          <div>
+            <div class="text-2xl font-bold">10+</div>
+            <div class="text-sm text-gray-600">Events</div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 flex items-start gap-4 soft-glow border">
+          <div class="w-12 h-12 rounded-lg bg-[color:var(--green)]/10 flex items-center justify-center">
+            <svg class="w-6 h-6 text-[color:var(--green)]" viewBox="0 0 24 24" fill="currentColor"><path d="M3 6h18v2H3z"/></svg>
+          </div>
+          <div>
+            <div class="text-2xl font-bold">50+</div>
+            <div class="text-sm text-gray-600">Videos Created</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== PROGRAMS PREVIEW ===== -->
+    <section id="programs" class="bg-[color:var(--dark)] py-16">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="flex items-center justify-between mb-8">
+          <div>
+            <h2 class="text-2xl font-extrabold text-[color:var(--white)]">Featured Programs</h2>
+            <p class="text-sm text-gray-500">Mentorship, school tours and street outreach that change lives.</p>
+          </div>
+          <a href="#programs" class="text-[color:var(--green)] font-semibold">View all programs →</a>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <!-- card 1 -->
+          <article class="bg-white rounded-2xl overflow-hidden soft-glow border transition hover:bg-[color:var(--dark)] hover:text-white">
+            <img src="Cybersecurity Mentorship.jpg" alt="Mentorship" class="w-full h-44 object-cover">
+            <div class="p-6">
+              <h3 class="font-bold text-lg mb-2">Cybersecurity Mentorship</h3>
+              <p class="text-sm text-600 mb-4">Personalised mentorship pairing students with experienced cybersecurity professionals for hands-on learning.</p>
+              <a href="#" class="inline-flex items-center gap-2 text-[color:var(--green)] font-semibold">Learn More →</a>
+            </div>
+          </article>
+
+          <!-- card 2 -->
+          <article class="bg-white rounded-2xl overflow-hidden soft-glow border transition hover:bg-[color:var(--dark)] hover:text-white">
+            <img src="School tour.jpg" alt="School Tours" class="w-full h-44 object-cover">
+            <div class="p-6">
+              <h3 class="font-bold text-lg mb-2">School Tours</h3>
+              <p class="text-sm text-600 mb-4">Interactive sessions delivered in schools to teach digital safety & intro networking skills.</p>
+              <a href="#" class="inline-flex items-center gap-2 text-[color:var(--green)] font-semibold">Learn More →</a>
+            </div>
+          </article>
+
+          <!-- card 3 -->
+          <article class="bg-white rounded-2xl overflow-hidden soft-glow border transition hover:bg-[color:var(--dark)] hover:text-white">
+            <img src="Street Vox-Pop.jpg" alt="Street Vox Pop" class="w-full h-44 object-cover">
+            <div class="p-6">
+              <h3 class="font-bold text-lg mb-2">Street Vox-Pop</h3>
+              <p class="text-sm text-600 mb-4">Short interviews on the street that create awareness and spark conversations about cyber safety.</p>
+              <a href="#" class="inline-flex items-center gap-2 text-[color:var(--green)] font-semibold">Learn More →</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== LATEST VIDEOS ===== -->
+    <section id="education" class="py-16">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="flex items-center justify-between mb-6">
+          <div>
+            <h2 class="text-2xl font-extrabold text-[color:var(--dark)]">Latest Videos</h2>
+            <p class="text-sm text-gray-500">Vox-pop, tutorials and event highlights</p>
+          </div>
+          <a href="#education" class="text-[color:var(--green)] font-semibold">View all videos →</a>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- video thumb 1 -->
+          <div class="relative group bg-white rounded-2xl overflow-hidden soft-glow border">
+            <img src="thumbnail1.png" alt="video 1" class="w-full h-52 object-cover">
+            <div class="absolute inset-0 flex items-center justify-center">
+              <div class="play-overlay opacity-90 group-hover:scale-105 cursor-pointer" onclick="openVideo('hG8iNjCuxJc')">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 8l6 4-6 4V8z"/></svg>
+              </div>
+            </div>
+            <div class="p-4">
+              <h3 class="font-semibold text-[color:var(--dark)]">Street Vox-Pop: Independence Day</h3>
+              <p class="text-xs text-gray-500">6:19 · By TRAN</p>
+            </div>
+          </div>
+
+          <!-- video thumb 2 -->
+          <div class="relative group bg-white rounded-2xl overflow-hidden soft-glow border">
+            <img src="thumbnail2.png" alt="video 2" class="w-full h-52 object-cover">
+            <div class="absolute inset-0 flex items-center justify-center">
+              <div class="play-overlay group-hover:scale-105 cursor-pointer" onclick="openVideo('SGAqtSQsJV8')">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 8l6 4-6 4V8z"/></svg>
+              </div>
+            </div>
+            <div class="p-4">
+              <h3 class="font-semibold text-[color:var(--dark)]">TRAN Street Cyber Evangelism</h3>
+              <p class="text-xs text-gray-500">1:18 · By TRAN</p>
+            </div>
+          </div>
+
+          <!-- video thumb 3 -->
+          <div class="relative group bg-white rounded-2xl overflow-hidden soft-glow border">
+            <img src="schooltour.jpeg" alt="video 3" class="w-full h-52 object-cover">
+            <div class="absolute inset-0 flex items-center justify-center">
+              <div class="play-overlay group-hover:scale-105 cursor-pointer" onclick="openVideo('qYJRg5mjZFE')">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 8l6 4-6 4V8z"/></svg>
+              </div>
+            </div>
+            <div class="p-4">
+              <h3 class="font-semibold text-[color:var(--dark)]">Cybersecurity Educational</h3>
+              <p class="text-xs text-gray-500">2:10 · By TRAN</p>
             </div>
           </div>
         </div>
-        <!-- Template 2 -->
-        <div class="promo-card overflow-hidden">
-          <img src="https://images.unsplash.com/photo-1520975922284-9d4b3b00a5ee?q=80&w=800&auto=format&fit=crop" class="w-full h-48 object-cover" alt="Business template">
-          <div class="p-5">
-            <h3 class="font-bold text-lg">Business / E‑commerce</h3>
-            <p class="text-slate-600 text-sm mt-2">Showcase products with WhatsApp order buttons.</p>
-            <div class="mt-4 flex items-center justify-between">
-              <span class="text-slate-900 font-extrabold">₦12,000</span>
-              <a href="https://wa.me/2348072352709?text=I%20want%20the%20Business%20template" class="px-4 py-2 rounded-xl bg-slate-900 text-white text-sm font-semibold">Choose</a>
+      </div>
+    </section>
+
+    <!-- ===== UPCOMING EVENTS (horizontal scroll) ===== -->
+    <section id="events" class="py-14 bg-[color:var(--dark)]">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="flex items-center justify-between mb-6">
+          <div>
+            <h2 class="text-2xl font-extrabold text-[color:var(--white)]">Upcoming Events / School Tours</h2>
+            <p class="text-sm text-gray-500">Join our next school tour or community outreach</p>
+          </div>
+          <a href="#events" class="text-[color:var(--green)] font-semibold">View All Events →</a>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- event card -->
+          <article class="min-w-[320px] bg-white rounded-2xl p-5 soft-glow border card-snap transition hover:bg-[color:var(--dark)] hover:text-white ">
+            <a href="#">
+            <div class="text-[color:var(--green)] font-semibold text-xs">School Tour</div>
+            <h3 class="font-bold text-lg mt-2">University of Lagos — Cyber Workshop</h3>
+            <p class="text-xs mt-3 text-500">May 22, 2025 · Faculty Auditorium</p>
+            <p class="text-sm mt-3 text-500">Hands-on introduction to networking and cyber hygiene for freshmen.</p>
+            <div class="mt-4 flex gap-2">
+              <a href="#" class="text-[color:var(--green)] font-semibold text-sm">Register</a>
+              <a class="text-sm text-500">Details</a>
+            </div>
+            </a>
+          </article>
+
+          <article class="min-w-[320px] bg-white rounded-2xl p-5 soft-glow border card-snap transition hover:bg-[color:var(--dark)] hover:text-white">
+            <a href="#">
+            <div class="text-[color:var(--green)] font-semibold text-xs">Street Campaign</div>
+            <h3 class="font-bold text-lg mt-2">Cyber Safety Outreach — Yaba Market</h3>
+            <p class="text-xs text-500 mt-3">June 3, 2025 · 10:00 AM</p>
+            <p class="text-sm text-600 mt-3">Short vox-pop interviews and live demonstrations to teach basic safety steps.</p>
+            <div class="mt-4 flex gap-2">
+              <a href="#" class="text-[color:var(--green)] font-semibold text-sm">Volunteer</a>
+              <a class="text-sm text-500">Details</a>
+            </div>
+            </a>
+          </article>
+
+          <article class="min-w-[320px] bg-white rounded-2xl p-5 soft-glow border card-snap transition hover:bg-[color:var(--dark)] hover:text-white">
+            <a href="#">
+            <div class="text-[color:var(--green)] font-semibold text-xs">Workshop</div>
+            <h3 class="font-bold text-lg mt-2">Intro to SOC — Hands-on Lab</h3>
+            <p class="text-xs text-500 mt-3">June 18, 2025 · 09:00 AM</p>
+            <p class="text-sm text-600 mt-3">Practical session guiding students through basic security operations center tasks.</p>
+            <div class="mt-4 flex gap-2">
+              <a href="#" class="text-[color:var(--green)] font-semibold text-sm">Register</a>
+              <a class="text-sm text-500">Details</a>
+            </div>
+            </a>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== GET INVOLVED / COLLABORATE ===== -->
+    <section id="involved" class="py-16">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="grid md:grid-cols-3 gap-6 items-stretch">
+          <div class="bg-[color:var(--dark)] text-white rounded-2xl p-8 soft-glow">
+            <h3 class="text-xl font-bold mb-2">Volunteer Opportunities</h3>
+            <p class="text-sm text-gray-200 mb-6">Join our field teams for school tours, street outreach, or remote mentorship.</p>
+            <a href="#contact" class="inline-flex items-center gap-2 bg-[color:var(--green)] text-black px-4 py-2 rounded-full font-semibold">Volunteer Now</a>
+          </div>
+
+          <div class="bg-[color:var(--dark)] text-white rounded-2xl p-8 soft-glow">
+            <h3 class="text-lg font-bold mb-2">Partner With Us</h3>
+            <p class="text-sm text-200 mb-6">Sponsors and partners help scale our programs. Let’s discuss collaborations and grants.</p>
+            <a href="#contact" class="inline-flex items-center gap-2 bg-[color:var(--green)] text-black px-4 py-2 rounded-full font-semibold">Partner With Us →</a>
+          </div>
+
+          <div class="bg-[color:var(--dark)] text-white rounded-2xl p-8 soft-glow">
+            <h3 class="text-lg font-bold mb-2">Donate / Support</h3>
+            <p class="text-sm text-gray-200 mb-6">Funds help buy lab equipment, travel expenses for tours, and produce free learning resources.</p>
+            <a href="#contact" class="inline-flex items-center gap-2 bg-[color:var(--green)] text-black px-4 py-2 rounded-full font-semibold">Support Us →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== NEWSLETTER SIGNUP ===== -->
+    <section id="newsletter" class="py-16 bg-[color:var(--dark)] text-white">
+      <div class="max-w-4xl mx-auto px-6 text-center">
+        <h2 class="text-2xl md:text-3xl font-extrabold mb-3">Stay Updated on Events & Cybersecurity Tips</h2>
+        <p class="text-gray-200 mb-6">Get event invites, free resources, and practical security tips delivered to your inbox.</p>
+
+        <form id="newsletterForm" class="flex flex-col sm:flex-row items-center gap-3 justify-center">
+          <input required name="name" placeholder="Your name" class="w-full sm:w-[220px] rounded-full px-4 py-3 text-gray-900" />
+          <input required name="email" type="email" placeholder="Your email" class="w-full sm:w-[320px] rounded-full px-4 py-3 text-gray-900" />
+          <button type="submit" class="rounded-full bg-[color:var(--green)] text-black px-6 py-3 font-semibold">Subscribe</button>
+        </form>
+
+        <p id="newsletterMsg" class="text-sm text-green-200 mt-4 hidden">Thanks! You're subscribed.</p>
+      </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer id="contact" class="bg-[color:var(--dark)] text-gray-200 py-10">
+      <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-6">
+        <div>
+          <div class="flex items-center gap-3">
+           <div class="w-10 h-10 rounded-md bg-black flex items-center justify-center">
+             <img src="TRAN-Logo.png" alt="Logo" class="w-6 h-6 object-contain">
+           </div>
+            <div>
+              <div class="font-bold text-white">TRAN</div>
+              <div class="text-sm">The Root Access Network</div>
             </div>
           </div>
+
+          <p class="text-sm text-gray-300 mt-4 max-w-sm">A mentorship-driven community helping students & early-career professionals into IT & Cybersecurity. Want to collaborate? Email us at <a href="mailto:therootaccessnetwork@africybercore.com" class="text-[color:var(--green)]">therootaccessnetwork@africybercore.com</a></p>
         </div>
-        <!-- Template 3 -->
-        <div class="promo-card overflow-hidden">
-          <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=800&auto=format&fit=crop" class="w-full h-48 object-cover" alt="Services template">
-          <div class="p-5">
-            <h3 class="font-bold text-lg">Services</h3>
-            <p class="text-slate-600 text-sm mt-2">Great for hotels, churches, NGOs & service providers.</p>
-            <div class="mt-4 flex items-center justify-between">
-              <span class="text-slate-900 font-extrabold">₦12,000</span>
-              <a href="https://wa.me/2348072352709?text=I%20want%20the%20Services%20template" class="px-4 py-2 rounded-xl bg-slate-900 text-white text-sm font-semibold">Choose</a>
-            </div>
+
+        <div class="text-sm">
+          <div class="font-semibold text-white mb-3">Quick Links</div>
+          <ul class="space-y-2">
+            <li><a href="#about" class="hover:text-white">About Us</a></li>
+            <li><a href="#programs" class="hover:text-white">Programs</a></li>
+            <li><a href="#education" class="hover:text-white">Videos</a></li>
+            <li><a href="#events" class="hover:text-white">Events</a></li>
+          </ul>
+        </div>
+
+        <div class="text-sm">
+          <div class="font-semibold text-white mb-3">Follow Us</div>
+          <div class="flex items-center gap-3">
+            <a href="https://ng.linkedin.com/company/the-root-access-network-t-r-a-n" class="px-3 py-2 rounded-md bg-white/10 hover:bg-white/20">LinkedIn</a>
+            <a href="https://www.instagram.com/therootaccessnetwork/" class="px-3 py-2 rounded-md bg-white/10 hover:bg-white/20">Instagram</a>
+            <a href="https://www.youtube.com/@TheRootAccessNetwork" class="px-3 py-2 rounded-md bg-white/10 hover:bg-white/20">YouTube</a>
           </div>
+
+          <div class="mt-6 text-xs text-gray-400">© 2025 The Root Access Network</div>
         </div>
       </div>
+    </footer>
+  </main>
 
-      <!-- Celebration strip -->
-      <div class="mt-12 text-center">
-        <div class="inline-flex items-center gap-3 bg-white/20 border border-white/40 rounded-full px-5 py-3 text-sm font-semibold shadow-lg">
-          <span>✨ Free WhatsApp & Email buttons included</span>
-          <span class="hidden sm:inline">•</span>
-          <span>🚀 Delivery in 48 hours</span>
-          <span class="hidden sm:inline">•</span>
-          <span>🎊 Stock images on request</span>
-        </div>
+  <!-- ===== VIDEO MODAL ===== -->
+  <div id="videoModal" class="fixed inset-0 bg-black/70 z-50 hidden items-center justify-center px-4">
+    <div class="bg-white rounded-xl overflow-hidden max-w-3xl w-full">
+      <div class="flex justify-between items-center px-4 py-2 border-b">
+        <div class="font-semibold">Video Player</div>
+        <button id="closeModal" class="text-gray-600 px-2 py-1">✕</button>
       </div>
-    </div>
-  </section>
-
-  <!-- ====== WORK DONE (auto-scrolling carousel of site screenshots) ====== -->
-  <section id="work" class="bg-black">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <h2 class="text-2xl font-extrabold">Recent Work</h2>
-      <p class="text-white/70 mt-1">A continuous rotation of example website screens.</p>
-      <div class="relative overflow-hidden mt-6">
-        <div class="marquee group">
-          <!-- Repeat the sequence twice for seamless loop -->
-          <div class="flex gap-5 shrink-0 pr-5">
-            <img class="h-40 sm:h-56 rounded-xl card" src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1200&auto=format&fit=crop" alt="sample1">
-            <img class="h-40 sm:h-56 rounded-xl card" src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=1200&auto=format&fit=crop" alt="sample2">
-            <img class="h-40 sm:h-56 rounded-xl card" src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&auto=format&fit=crop" alt="sample3">
-            <img class="h-40 sm:h-56 rounded-xl card" src="https://images.unsplash.com/photo-1557800636-894a64c1696f?q=80&w=1200&auto=format&fit=crop" alt="sample4">
-            <img class="h-40 sm:h-56 rounded-xl card" src="https://images.unsplash.com/photo-1520975922284-9d4b3b00a5ee?q=80&w=1200&auto=format&fit=crop" alt="sample5">
-          </div>
-          <div class="flex gap-5 shrink-0 pr-5" aria-hidden="true">
-            <img class="h-40 sm:h-56 rounded-xl card" src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1200&auto=format&fit=crop" alt="sample1-dup">
-            <img class="h-40 sm:h-56 rounded-xl card" src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=1200&auto=format&fit=crop" alt="sample2-dup">
-            <img class="h-40 sm:h-56 rounded-xl card" src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&auto=format&fit=crop" alt="sample3-dup">
-            <img class="h-40 sm:h-56 rounded-xl card" src="https://images.unsplash.com/photo-1557800636-894a64c1696f?q=80&w=1200&auto=format&fit=crop" alt="sample4-dup">
-            <img class="h-40 sm:h-56 rounded-xl card" src="https://images.unsplash.com/photo-1520975922284-9d4b3b00a5ee?q=80&w=1200&auto=format&fit=crop" alt="sample5-dup">
-          </div>
+      <div class="p-0">
+        <div id="videoHolder" class="w-full h-0" style="padding-bottom:56.25%; position:relative;">
+          <!-- iframe inserted by JS -->
         </div>
       </div>
     </div>
-  </section>
+  </div>
 
-  <!-- ====== CONTACT (form + text area "How can we help") ====== -->
-  <section id="contact" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <h2 class="text-2xl font-extrabold">Get in Touch</h2>
-    <div class="mt-6 grid md:grid-cols-2 gap-8">
-      <form class="card p-6 border border-white/10 bg-white/5" method="POST" action="#">
-        <div class="grid grid-cols-1 gap-4">
-          <label class="text-sm font-medium">Name
-            <input required type="text" name="name" class="mt-1 w-full rounded-xl border border-white/20 bg-black/40 text-white placeholder-white/40 px-4 py-2" placeholder="Your name">
-          </label>
-          <label class="text-sm font-medium">Email
-            <input required type="email" name="email" class="mt-1 w-full rounded-xl border border-white/20 bg-black/40 text-white placeholder-white/40 px-4 py-2" placeholder="you@example.com">
-          </label>
-          <label class="text-sm font-medium">Phone
-            <input required type="tel" name="phone" class="mt-1 w-full rounded-xl border border-white/20 bg-black/40 text-white placeholder-white/40 px-4 py-2" placeholder="+234…">
-          </label>
-          <button type="submit" class="mt-2 px-5 py-3 rounded-xl bg-white text-black font-semibold">Send</button>
-        </div>
-        <p class="text-xs text-white/60 mt-3">Prefer WhatsApp? <a class="text-white underline" href="https://wa.me/2348072352709">Tap here</a>.</p>
-      </form>
-      <div class="card p-6 border border-white/10 bg-white/5">
-        <div class="text-lg font-semibold mb-2">How can we help?</div>
-        <textarea class="w-full h-40 rounded-xl border border-white/20 bg-black/40 text-white placeholder-white/40 px-4 py-3" placeholder="Tell us about your website"></textarea>
-        <div class="mt-5 grid grid-cols-2 sm:grid-cols-3 gap-3 text-sm">
-          <a href="https://wa.me/2348072352709" class="px-4 py-2 rounded-xl bg-white text-black text-center font-semibold">WhatsApp</a>
-          <a href="mailto:KnightDesigns.ng@gmail.com" class="px-4 py-2 rounded-xl border border-white/30 text-center">Email</a>
-          <a href="https://www.facebook.com/share/1FvkPaPKKU/" class="px-4 py-2 rounded-xl border border-white/30 text-center">Facebook</a>
-          <a href="https://www.instagram.com/knight_xjames?igsh=ZmxtaXUwd3VhcTEw" class="px-4 py-2 rounded-xl border border-white/30 text-center">Instagram</a>
-          <a href="https://x.com/JamesAdegunna?t=NwR_SZWxMEGc3R1TwyX5xg&s=09" class="px-4 py-2 rounded-xl border border-white/30 text-center">X (Twitter)</a>
-          <a href="tel:+2348072352709" class="px-4 py-2 rounded-xl border border-white/30 text-center">Call</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ====== FOOTER ====== -->
-  <footer class="border-t border-white/10 bg-black">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 text-sm text-white/70 flex flex-col sm:flex-row items-center justify-between gap-3">
-      <div>© <span id="year"></span> KD Web. All rights reserved.</div>
-      <div class="flex items-center gap-4">
-        <a href="https://wa.me/2348072352709" class="underline">WhatsApp</a>
-        <a href="mailto:KnightDesigns.ng@gmail.com" class="underline">Email</a>
-        <a href="#" class="underline">Privacy</a>
-      </div>
-    </div>
-  </footer>
-
-  <!-- ====== SCRIPTS ====== -->
+  <!-- ===== SCRIPTS ===== -->
   <script>
-    // Mobile menu toggle
-    const mb = document.getElementById('menuBtn');
-    const mm = document.getElementById('mobileMenu');
-    if(mb){ mb.addEventListener('click',()=>mm.classList.toggle('hidden')); }
+    // mobile menu toggle
+    const mobileBtn = document.getElementById('mobileBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    mobileBtn?.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
 
-    // Hero slideshow (cycle background images)
-    const slides = Array.from(document.querySelectorAll('.hero-slide'));
-    let idx = 0; setInterval(()=>{ slides[idx].classList.remove('active'); idx=(idx+1)%slides.length; slides[idx].classList.add('active'); }, 3200);
+    // video modal open function (YouTube id)
+    // open video from multiple buttons
+document.querySelectorAll('#watchBtn, #watchBtn2, #heroPlay, #mWatch').forEach(el => {
+  if (!el) return;
+  el.addEventListener('click', () => openVideo('hG8iNjCuxJc')); // YouTube video ID
+});
 
-    // Year
-    document.getElementById('year').textContent = new Date().getFullYear();
+// Function to actually open and play the video
+function openVideo(videoId) {
+  // Create overlay background
+  const overlay = document.createElement('div');
+  overlay.style.position = 'fixed';
+  overlay.style.top = '0';
+  overlay.style.left = '0';
+  overlay.style.width = '100%';
+  overlay.style.height = '100%';
+  overlay.style.backgroundColor = 'rgba(0,0,0,0.8)';
+  overlay.style.display = 'flex';
+  overlay.style.alignItems = 'center';
+  overlay.style.justifyContent = 'center';
+  overlay.style.zIndex = '9999';
+
+  // Create close button
+  const closeBtn = document.createElement('div');
+  closeBtn.innerHTML = '&times;';
+  closeBtn.style.position = 'absolute';
+  closeBtn.style.top = '20px';
+  closeBtn.style.right = '30px';
+  closeBtn.style.fontSize = '40px';
+  closeBtn.style.color = '#fff';
+  closeBtn.style.cursor = 'pointer';
+  closeBtn.style.userSelect = 'none';
+  closeBtn.style.fontFamily = 'Arial, sans-serif';
+  closeBtn.title = 'Close';
+
+  // Create the YouTube iframe
+  const iframe = document.createElement('iframe');
+  iframe.width = '800';
+  iframe.height = '450';
+  iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+  iframe.frameBorder = '0';
+  iframe.allow = 'autoplay; encrypted-media';
+  iframe.allowFullscreen = true;
+  iframe.style.borderRadius = '10px';
+  iframe.style.boxShadow = '0 0 25px rgba(0,0,0,0.5)';
+
+  // Close overlay when clicking outside video or the close button
+  overlay.addEventListener('click', e => {
+    if (e.target === overlay) overlay.remove();
+  });
+  closeBtn.addEventListener('click', () => overlay.remove());
+
+  // Add everything to the page
+  overlay.appendChild(closeBtn);
+  overlay.appendChild(iframe);
+  document.body.appendChild(overlay);
+}
+
+
+    // newsletter submit
+    const newsletterForm = document.getElementById('newsletterForm');
+    newsletterForm?.addEventListener('submit', function(e){
+      e.preventDefault();
+      // normally you'd POST to your API here
+      document.getElementById('newsletterMsg').classList.remove('hidden');
+      // simple visual feedback
+      setTimeout(()=> {
+        document.getElementById('newsletterMsg').classList.add('hidden');
+        newsletterForm.reset();
+      }, 2500);
+    });
+
+    // helper: open video from thumb onClick (global fn)
+    window.openVideo = openVideo;
   </script>
 </body>
 </html>
