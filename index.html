@@ -39,11 +39,12 @@
 <body class="bg-white text-gray-900">
 
   <!-- ===== STICKY HEADER ===== -->
+  <!-- Header -->
   <header class="sticky top-0 z-40 bg-[color:var(--dark)] border-b border-[color:var(--green)]/20 text-white">
-    <div class="max-w-7xl mx-auto px-4">
+    <div class="max-w-7xl mx-auto px-6">
       <div class="flex items-center justify-between h-16">
-        <!-- Left: Logo -->
-        <a href="#" class="flex items-center gap-3">
+       <!-- Left: Logo -->
+        <a href="index.html" class="flex items-center gap-3">
           <div class="w-10 h-10 rounded-md bg-black flex items-center justify-center">
             <img src="TRAN-Logo.png" alt="Logo" class="w-6 h-6 object-contain">
           </div>
@@ -53,28 +54,35 @@
           </div>
         </a>
 
-        <!-- Nav (desktop) -->
         <nav class="hidden md:flex items-center gap-6 font-medium">
-          <a href="#about" class="hover:text-[color:var(--green)]">About Us</a>
-          <a href="#programs" class="hover:text-[color:var(--green)]">Programs</a>
-          <a href="#education" class="hover:text-[color:var(--green)]">Education</a>
-          <a href="#events" class="hover:text-[color:var(--green)]">Events</a>
-          <a href="#involved" class="hover:text-[color:var(--green)]">Get Involved</a>
-          <a href="#contact" class="hover:text-[color:var(--green)]">Contact</a>
+          <a href="about-us.html" class="hover:text-[color:var(--green)]">About</a>
+          <a href="programs.html" class="hover:text-[color:var(--green)]">Programs</a>
+          <a href="get-involved.html" class="hover:text-[color:var(--green)]">Get Involved</a>
+          <a href="contact.html" class="hover:text-[color:var(--green)]">Contact</a>
         </nav>
 
-        <!-- CTA -->
-        <div class="flex items-center gap-3">
-          <button class="hidden md:inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[color:var(--green)] text-[color:var(--green)] hover:bg-[color:var(--green)] hover:text-white transition">
-            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M10 8l6 4-6 4V8z"/></svg>
-            Watch
-          </button>
-          <a href="#programs" class="hidden md:inline-flex bg-[color:var(--green)] text-black px-4 py-2 rounded-full font-semibold hover:bg-[#159b44] transition">Join</a>
+        <div class="hidden md:flex items-center gap-3">
+          <a href="#videos" class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[color:var(--green)] text-[color:var(--green)] hover:bg-[color:var(--green)] hover:text-white transition">Watch</a>
+          <a href="#cta" class="inline-flex bg-[color:var(--green)] text-black px-4 py-2 rounded-full font-semibold hover:bg-[#159b44] transition">Join</a>
+        </div>
 
-          <!-- Mobile menu -->
-          <button id="mobileBtn" class="md:hidden p-2 border border-gray-500 rounded-md">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M4 8h16M4 16h16"/></svg>
-          </button>
+        <!-- Mobile menu button -->
+        <button id="mobileBtn" class="md:hidden p-2 rounded-md border border-white/20 text-white">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M4 8h16M4 16h16"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile nav (hidden by default) -->
+    <div id="mobileMenu" class="hidden md:hidden bg-[color:var(--dark)]/95 border-t border-white/10">
+      <div class="px-4 py-4 space-y-3">
+        <a href="about-us.html" class="block text-white">About</a>
+        <a href="programs.html" class="block text-white font-semibold">Programs</a>
+        <a href="get-involved.html" class="block text-white">Get Involved</a>
+        <a href="contact.html" class="block text-white">Contact</a>
+        <div class="pt-2 flex gap-2">
+          <a href="#videos" class="flex-1 py-2 rounded-full border border-[color:var(--green)] text-[color:var(--green)] text-center">Watch</a>
+          <a href="#cta" class="flex-1 py-2 rounded-full bg-[color:var(--green)] text-black text-center">Join</a>
         </div>
       </div>
     </div>
@@ -84,7 +92,7 @@
     <section class="relative h-[82vh] md:h-[86vh]">
       <!-- background video (placeholder); replace src with your clip -->
       <video class="absolute inset-0 w-full h-full object-cover" autoplay muted loop playsinline poster="https://via.placeholder.com/1600x900.png?text=TRAN+Hero+Poster">
-        <source src="1019.mp4" type="video/mp4">
+        <source src="c:\Users\ifeol\Desktop\Web Dev\TRAN\1019.mp4" type="video/mp4">
         <!-- fallback image will show via poster attribute -->
       </video>
 
@@ -191,7 +199,7 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
           <!-- card 1 -->
           <article class="bg-white rounded-2xl overflow-hidden soft-glow border transition hover:bg-[color:var(--dark)] hover:text-white">
-            <img src="Cybersecurity Mentorship.jpg" alt="Mentorship" class="w-full h-44 object-cover">
+            <img src="c:\Users\ifeol\Desktop\Web Dev\TRAN\mentorship.jpg" alt="Mentorship" class="w-full h-44 object-cover">
             <div class="p-6">
               <h3 class="font-bold text-lg mb-2">Cybersecurity Mentorship</h3>
               <p class="text-sm text-600 mb-4">Personalised mentorship pairing students with experienced cybersecurity professionals for hands-on learning.</p>
@@ -201,7 +209,7 @@
 
           <!-- card 2 -->
           <article class="bg-white rounded-2xl overflow-hidden soft-glow border transition hover:bg-[color:var(--dark)] hover:text-white">
-            <img src="School tour.jpg" alt="School Tours" class="w-full h-44 object-cover">
+            <img src="c:\Users\ifeol\Desktop\Web Dev\TRAN\School tour.jpg" alt="School Tours" class="w-full h-44 object-cover">
             <div class="p-6">
               <h3 class="font-bold text-lg mb-2">School Tours</h3>
               <p class="text-sm text-600 mb-4">Interactive sessions delivered in schools to teach digital safety & intro networking skills.</p>
@@ -211,7 +219,7 @@
 
           <!-- card 3 -->
           <article class="bg-white rounded-2xl overflow-hidden soft-glow border transition hover:bg-[color:var(--dark)] hover:text-white">
-            <img src="Street Vox-Pop.jpg" alt="Street Vox Pop" class="w-full h-44 object-cover">
+            <img src="c:\Users\ifeol\Desktop\Web Dev\TRAN\thumbnail2.png" alt="Street Vox Pop" class="w-full h-44 object-cover">
             <div class="p-6">
               <h3 class="font-bold text-lg mb-2">Street Vox-Pop</h3>
               <p class="text-sm text-600 mb-4">Short interviews on the street that create awareness and spark conversations about cyber safety.</p>
@@ -236,7 +244,7 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           <!-- video thumb 1 -->
           <div class="relative group bg-white rounded-2xl overflow-hidden soft-glow border">
-            <img src="thumbnail1.png" alt="video 1" class="w-full h-52 object-cover">
+            <img src="c:\Users\ifeol\Desktop\Web Dev\TRAN\thumbnail1.png" alt="video 1" class="w-full h-52 object-cover">
             <div class="absolute inset-0 flex items-center justify-center">
               <div class="play-overlay opacity-90 group-hover:scale-105 cursor-pointer" onclick="openVideo('hG8iNjCuxJc')">
                 <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 8l6 4-6 4V8z"/></svg>
@@ -250,7 +258,7 @@
 
           <!-- video thumb 2 -->
           <div class="relative group bg-white rounded-2xl overflow-hidden soft-glow border">
-            <img src="thumbnail2.png" alt="video 2" class="w-full h-52 object-cover">
+            <img src="c:\Users\ifeol\Desktop\Web Dev\TRAN\thumbnail2.png" alt="video 2" class="w-full h-52 object-cover">
             <div class="absolute inset-0 flex items-center justify-center">
               <div class="play-overlay group-hover:scale-105 cursor-pointer" onclick="openVideo('qYJRg5mjZFE')">
                 <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 8l6 4-6 4V8z"/></svg>
@@ -264,7 +272,7 @@
 
           <!-- video thumb 3 -->
           <div class="relative group bg-white rounded-2xl overflow-hidden soft-glow border">
-            <img src="schooltour.jpeg" alt="video 3" class="w-full h-52 object-cover">
+            <img src="c:\Users\ifeol\Desktop\Web Dev\TRAN\schooltour.jpeg" alt="video 3" class="w-full h-52 object-cover">
             <div class="absolute inset-0 flex items-center justify-center">
               <div class="play-overlay group-hover:scale-105 cursor-pointer" onclick="openVideo('SGAqtSQsJV8')">
                 <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 8l6 4-6 4V8z"/></svg>
@@ -382,7 +390,7 @@
         <div>
           <div class="flex items-center gap-3">
            <div class="w-10 h-10 rounded-md bg-black flex items-center justify-center">
-             <img src="TRAN-Logo.png" alt="Logo" class="w-6 h-6 object-contain">
+             <img src="c:\Users\ifeol\Desktop\Web Dev\TRAN\TRAN-Logo.png" alt="Logo" class="w-6 h-6 object-contain">
            </div>
             <div>
               <div class="font-bold text-white">TRAN</div>
@@ -396,10 +404,9 @@
         <div class="text-sm">
           <div class="font-semibold text-white mb-3">Quick Links</div>
           <ul class="space-y-2">
-            <li><a href="#about" class="hover:text-white">About Us</a></li>
+            <li><a href="about-us.html" class="hover:text-white">About Us</a></li>
             <li><a href="#programs" class="hover:text-white">Programs</a></li>
-            <li><a href="#education" class="hover:text-white">Videos</a></li>
-            <li><a href="#events" class="hover:text-white">Events</a></li>
+            <li><a href="get-involved.html" class="hover:text-white">Get Involved</a></li>
           </ul>
         </div>
 
